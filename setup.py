@@ -24,7 +24,7 @@ setup(
     # Optional include package data to ship with your package
     # Comment out this line to prevent the files from being packaged with your software
     # Extend/modify the list to include/exclude other items as need be
-    package_data={'che696_proj_yufei': ["data/*.dat"]
+    package_data={'che696_proj_yufei': ["data/*.bmp"]
                   },
 
     entry_points={'console_scripts': ['image_proc = che696_proj_yufei.image_proc:main',
