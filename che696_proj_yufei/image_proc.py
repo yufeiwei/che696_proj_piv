@@ -12,7 +12,6 @@ import sys
 import argparse
 import numpy as np
 from PIL import Image
-from scipy.signal import correlate
 import os
 import matplotlib.pyplot as plt
 
@@ -102,6 +101,7 @@ def x_corr(image_a_segments, image_b_segments):
     """
     import warnings
     warnings.filterwarnings("ignore")
+    from scipy.signal import correlate
     shift = np.zeros(len(image_a_segments))
     for i in range(len(image_a_segments)):
         y1 = image_a_segments[i]
@@ -113,7 +113,7 @@ def x_corr(image_a_segments, image_b_segments):
     return shift
 
 
-def piv_analysis(args):
+def piv_analysis(image_a_path, image_b_path, division_pixel):
     """
     Calculate the 1D velocity profile based on a pair of images.
     Horizontal direction: flow direction.
@@ -123,24 +123,21 @@ def piv_analysis(args):
 
     Parameters
     ----------
-    args : input argument
-    args.image_a & args.image_b : a image pair in the form of 2D Numpy array
-    args.division_pixel : Thickness (number of pixels) of horizontal stripes
+    image_a_path : path of image 1
+    image_b_path : path of image 2
+    division_pixel : Thickness (number of pixels) of horizontal stripes
 
     Returns
     -------
     piv_result : displacement profile (column 2) versus y position (column 1)
     """
-    image_path_a = args.image_file[0]
-    image_path_b = args.image_file[1]
-    image_a, ret_a = load_image(image_path_a)
-    image_b, ret_b = load_image(image_path_b)
+    image_a, ret_a = load_image(image_a_path)
+    image_b, ret_b = load_image(image_b_path)
     if (ret_a!=SUCCESS) or (ret_b!=SUCCESS):
         return IO_ERROR
     if not image_a.shape == image_b.shape:
         warning('Image 1 and image 2 have different sizes')
         return INVALID_DATA
-    division_pixel = args.division_pixel
     image_a_segments, y_position = divid_image(image_a, division_pixel)
     y_position = np.asarray(y_position)
     image_b_segments = divid_image(image_b, division_pixel)[0]
@@ -185,9 +182,11 @@ def main(argv=None):
     args, ret = parse_cmdline(argv)
     if ret != SUCCESS:
         return ret
-    piv_results = piv_analysis(args)
+
     image_a_path = args.image_file[0]
     image_b_path = args.image_file[1]
+    division_pixel = args.division_pixel
+    piv_results = piv_analysis(image_a_path, image_b_path, division_pixel)
     image_a_name = os.path.basename(image_a_path)
     image_b_name = os.path.basename(image_b_path)
     name_p1 = os.path.splitext(image_a_name)[0]
