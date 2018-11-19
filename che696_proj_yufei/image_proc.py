@@ -16,9 +16,10 @@ from scipy.signal import correlate
 import os
 import matplotlib.pyplot as plt
 
-IO_ERROR = 2
-
 SUCCESS = 0
+INVALID_DATA = 1
+IO_ERROR = 2
+NUMBER_OF_IMAGE = 3
 
 DEF_IMAGE_NAME_A = 'sample_im1.bmp'
 
@@ -51,10 +52,14 @@ def load_image( infilename ) :
     :param infilename: input file name
     :return: image_data : image in the form of Numpy array
     """
-    img = Image.open( infilename )
-    img.load()
-    image_data = np.asarray( img, dtype="int32" )
-    return image_data
+    try:
+        img = Image.open( infilename )
+        img.load()
+        image_data = np.asarray( img, dtype="int32" )
+    except OSError as e:
+        warning("Read invalid image:", e)
+        return None, e
+    return image_data, SUCCESS
 
 def divid_image(image, division_pixel):
     """
@@ -128,8 +133,13 @@ def piv_analysis(args):
     """
     image_path_a = args.image_file[0]
     image_path_b = args.image_file[1]
-    image_a = load_image(image_path_a)
-    image_b = load_image(image_path_b)
+    image_a, ret_a = load_image(image_path_a)
+    image_b, ret_b = load_image(image_path_b)
+    if (ret_a!=SUCCESS) or (ret_b!=SUCCESS):
+        return IO_ERROR
+    if not image_a.shape == image_b.shape:
+        warning('Image 1 and image 2 have different sizes')
+        return INVALID_DATA
     division_pixel = args.division_pixel
     image_a_segments, y_position = divid_image(image_a, division_pixel)
     y_position = np.asarray(y_position)
@@ -154,7 +164,7 @@ def parse_cmdline(argv):
     # print([DEF_IMAGE_NAME_A, DEF_IMAGE_NAME_B])
 
     parser.add_argument("-m", "--image_file", help="The location of the image files",
-                        default=[DEF_IMAGE_NAME_A, DEF_IMAGE_NAME_B], nargs='*')
+                        default=[DEF_IMAGE_NAME_A, DEF_IMAGE_NAME_B], nargs=2)
 
     parser.add_argument("-d", "--division_pixel", type=int,help="Thickness (number of pixels) of horizontal stripes",
                         default=5)
@@ -162,14 +172,14 @@ def parse_cmdline(argv):
     # parser.add_argument("-n", "--no_attribution", help="Whether to include attribution",
     #                    action='store_false')
     args = None
-    try:
-        args = parser.parse_args(argv)
-    except IOError as e:
-        warning("Problems reading file:", e)
+    args = parser.parse_args(argv)
+    image1_none = not os.path.isfile(args.image_file[0])
+    image2_none = not os.path.isfile(args.image_file[1])
+    if image1_none or image2_none:
+        warning("Either {} or {} does not exist".format(args.image_file[0], args.image_file[1]))
         parser.print_help()
         return args, IO_ERROR
     return args, SUCCESS
-
 
 def main(argv=None):
     args, ret = parse_cmdline(argv)
@@ -184,9 +194,13 @@ def main(argv=None):
     name_p2 = os.path.splitext(image_b_name)[0]
     base_f_name = 'piv_results_' + name_p1 + '_' + name_p2
     out_name = base_f_name + '.csv'
-    np.savetxt(out_name, piv_results, delimiter=',')
+    try:
+        np.savetxt(out_name, piv_results, delimiter=',')
+        print("Wrote file: {}".format(out_name))
+    except ValueError as e:
+        warning("Data cannot be written to file:", e)
+        return INVALID_DATA
     plot_piv(base_f_name, piv_results)
-    print(out_name)
     return SUCCESS  # success
 
 if __name__ == "__main__":
