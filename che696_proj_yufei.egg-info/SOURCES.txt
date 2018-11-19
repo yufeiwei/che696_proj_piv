@@ -1,0 +1,15 @@
+MANIFEST.in
+README.md
+setup.cfg
+setup.py
+versioneer.py
+che696_proj_yufei/__init__.py
+che696_proj_yufei/_version.py
+che696_proj_yufei/image_proc.py
+che696_proj_yufei.egg-info/PKG-INFO
+che696_proj_yufei.egg-info/SOURCES.txt
+che696_proj_yufei.egg-info/dependency_links.txt
+che696_proj_yufei.egg-info/entry_points.txt
+che696_proj_yufei.egg-info/top_level.txt
+che696_proj_yufei/data/sample_im1.bmp
+che696_proj_yufei/data/sample_im2.bmp
