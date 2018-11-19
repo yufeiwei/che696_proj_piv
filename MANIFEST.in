@@ -1,0 +1,2 @@
+include versioneer.py
+include che696_proj_yufei/_version.py
