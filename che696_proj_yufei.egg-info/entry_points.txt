@@ -1,3 +1,0 @@
-[console_scripts]
-image_proc = che696_proj_yufei.image_proc:main
-
