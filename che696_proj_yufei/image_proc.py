@@ -20,9 +20,9 @@ IO_ERROR = 2
 
 SUCCESS = 0
 
-DEF_IMAGE_NAME_A = 'im_1.bmp'
+DEF_IMAGE_NAME_A = 'sample_im1.bmp'
 
-DEF_IMAGE_NAME_B = 'im_2.bmp'
+DEF_IMAGE_NAME_B = 'sample_im2.bmp'
 
 def warning(*objs):
     """Writes a message to stderr."""

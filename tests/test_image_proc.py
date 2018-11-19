@@ -23,7 +23,7 @@ MAIN_DIR = os.path.join(CURRENT_DIR, '..')
 TEST_DATA_DIR = os.path.join(CURRENT_DIR, 'data_proc')
 PROJ_DIR = os.path.join(MAIN_DIR, 'che696_proj_yufei')
 DATA_DIR = os.path.join(PROJ_DIR, 'data')
-SAMPLE_DATA_FILE_LOC = [os.path.join(DATA_DIR, 'im_1.bmp'), os.path.join(DATA_DIR, 'im_2.bmp')]
+SAMPLE_DATA_FILE_LOC = [os.path.join(DATA_DIR, 'sample_im1.bmp'), os.path.join(DATA_DIR, 'sample_im2.bmp')]
 
 # Assumes running tests from the main directory
 DEF_CSV_OUT = os.path.join(MAIN_DIR, 'test_piv_results.csv')
