@@ -41,7 +41,7 @@ install:
 
     # Build and install package
 #  - conda build --python=$PYTHON_VER devtools/conda-recipe
-  - conda install --use-local che696_proj_yufei
+#  - conda install --use-local che696_proj_yufei
 
 
 script:
