@@ -31,21 +31,27 @@ before_install:
   - python -V
 
 install:
+- ./.travis/install.sh
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - # Useful for debugging any issues with conda
+  - conda info -a
 
-    # Create test environment for package
-  - conda create -n test python=$PYTHON_VER pip pytest pytest-cov
-  - conda activate test
+  - conda create -q -n test-environment python=$PYTHON_VER pip pytest pytest-cov
+  - source activate test-environment
+  - python setup.py install
 
-    # Install pip only modules
+  - # Install pip only modules
   - pip install codecov
-
-    # Build and install package
-#  - conda build --python=$PYTHON_VER devtools/conda-recipe
-#  - conda install --use-local che696_proj_yufei
 
 
 script:
-  - pytest -v --cov=che696_proj_yufei che696_proj_yufei/tests/
+  - # Allows matplotlib to render in all envs
+  - export MPLBACKEND=Agg
+  - pytest -v --cov=che696_proj_yufei tests/
 
 notifications:
     email: false
