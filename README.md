@@ -1,7 +1,7 @@
 che696_yufei_proj
 ==============================
 
-Particle image velocimetry for simple shear flows
+Particle image velocimetry for simple shear flows. Converted from MATLAB codes.
 
 ### Copyright
 
@@ -12,6 +12,27 @@ Copyright (c) 2018, yufeiwei
  
 Project based on the 
 [Computational Chemistry Python Cookiecutter](https://github.com/choderalab/cookiecutter-python-comp-chem)
+
+Introduction
+-------------
+#### What can you do with this package:
+
+Run particle image velocimetry (PIV) analysis for simple shear flow from command line. 
+Calculate the mean displacement of tracer particles at different positions along the flow gradient direction.
+
+#### Format of input images:
+
+A pair of black-and-white images of equal size. 
+
+Horizontal direction: flow direction
+
+Vertical direction: velocity gradient direction
+
+#### Output of the PIV analysis
+
+* a .csv file containing displacement (column 2) versus position along the gradient direction (column 1)
+
+* a plot showing the displacement profile.
 
 Installation
 ------------
@@ -34,30 +55,10 @@ Installation
     python setup.py sdist   
    ~~~
    
-   b. Run
+   b. Then run
    ~~~
    pip install dist/che696_proj_yufei-*.tar.gz --user
    ~~~
-
-Introduction
--------------
-#### What can you do with this package:
-
-Run particle image velocimetry (PIV) analysis for simple shear flow from command line.
-
-#### Format of input images:
-
-A pair of black-and-white images of equal size. 
-
-Horizontal direction: flow direction
-
-Vertical direction: velocity gradient direction
-
-#### Output of the PIV analysis
-
-* a .csv file containing displacement (column 2) versus position along the gradient direction (column 1)
-
-* a plot showing the displacement profile.
 
 Example
 --------
