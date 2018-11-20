@@ -59,6 +59,11 @@ Installation
    ~~~
    pip install dist/che696_proj_yufei-*.tar.gz --user
    ~~~
+   
+   c. To update the package, run
+   ~~~
+    pip install --upgrade dist/che696_proj_yufei-*.tar.gz --user
+   ~~~
 
 Example
 --------
