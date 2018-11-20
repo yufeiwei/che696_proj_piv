@@ -38,6 +38,7 @@ Installation
    ~~~
    pip install dist/che696_proj_yufei-*.tar.gz --user
    ~~~
+
 Introduction
 -------------
 #### What can you do with this package:
@@ -74,4 +75,9 @@ Example
     ~~~
     image_proc -m image_a_path image_b_path -d stripe_height
     ~~~
-    
+
+4. To run unit tests from command line, go to the main project folder and run:
+
+    ~~~
+    python -m unittest tests/test_image_proc.py
+    ~~~
