@@ -70,7 +70,7 @@ Example
     image_proc -m image_a_path image_b_path
     ~~~
 
-3. To change the value of the stripe height (type=int) (default = 5 pixels), run:
+3. To change the value of the stripe height (type=int) (default = 5), run:
     ~~~
     image_proc -m image_a_path image_b_path -d stripe_height
     ~~~
