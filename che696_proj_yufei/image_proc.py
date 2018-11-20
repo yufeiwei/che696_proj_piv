@@ -38,8 +38,8 @@ def plot_piv(base_f_name, piv_results):
     """
     plt.plot(piv_results[:,0], piv_results[:,1], 'bs')
     plt.title('PIV results')
-    plt.xlabel('Y position')
-    plt.ylabel('Displacement')
+    plt.xlabel('Y position (pixel)')
+    plt.ylabel('Displacement (pixel)')
     out_name = base_f_name + '.png'
     plt.savefig(out_name)
     print("Wrote file: {}".format(out_name))
